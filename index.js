@@ -1,41 +1,32 @@
-const express=require('express');
-const path= require('path')
+const express = require('express');
+const path = require('path');
 require('dotenv').config();
 
+// App de Express
 const app = express();
 
-
-// node server 
-const server= require('http').createServer(app);
+// Node Server
+const server = require('http').createServer(app);
 module.exports.io = require('socket.io')(server);
-
-require('./socket/socket')
-
+require('./sockets/socket');
 
 
 
-// paht publico 
+
+// Path público
+const publicPath = path.resolve( __dirname, 'public' );
+app.use( express.static( publicPath ) );
 
 
-const publicPaht=path.resolve(__dirname,'public');
 
-app.use(express.static(publicPaht));
 
-server.listen(process.env.PORT,(err)=>{
 
-    if(err) throw new Error(err);
+server.listen( process.env.PORT, ( err ) => {
 
-    console.log('Servidor corriendo en puerto', process.env.PORT);
+    if ( err ) throw new Error(err);
 
+    console.log('Servidor corriendo en puerto', process.env.PORT );
 
 });
 
 
-
-
-
-// Instalaciones 
-/*
-npm i dotenv
-
-*/ 
